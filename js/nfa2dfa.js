@@ -106,9 +106,9 @@ $(document).ready(function () {
         var nfa = regexToNfa($('#input_regex').val()),
             dfa,
             url,
-            prefix = window.location.href.split('?')[0] + '?regex=',
+            prefix = window.location.pathname.replace(/\/[^\/]*$/, '/') + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
-        $('#input_url').val(prefix + input);
+        $('#input_url').val(window.location.origin + prefix + input);
         $('#alert_error').hide();
         if (typeof nfa === 'string') {
             $('#p_error').text(nfa);
@@ -118,12 +118,12 @@ $(document).ready(function () {
             $('#dfa_table').html(genDfaTable(dfa));
             $('svg').attr('width', $('svg').parent().width());
             genAutomataSVG('svg', dfa);
-// 修改链接生成代码
-url = prefix.replace('nfa2dfa', 'index') + input;
-$('#nfa_link').html('<button class="btn btn-raised btn-block btn-primary" onclick="window.open(\'' + url + '\', \'_blank\')">NFA</button>');
-
-url = prefix.replace('nfa2dfa', 'min_dfa') + input;
-$('#min_dfa_link').html('<button class="btn btn-raised btn-block btn-primary" onclick="window.open(\'' + url + '\', \'_blank\')">Min-DFA</button>');
+            
+            url = window.location.origin + prefix.replace(/\?regex=$/, 'index.html?regex=') + input;
+            $('#nfa_link').html('<button class="btn btn-raised btn-block btn-primary" onclick="window.open(\'' + url + '\', \'_blank\')">NFA</button>');
+            
+            url = window.location.origin + prefix.replace(/\?regex=$/, 'min_dfa.html?regex=') + input;
+            $('#min_dfa_link').html('<button class="btn btn-raised btn-block btn-primary" onclick="window.open(\'' + url + '\', \'_blank\')">Min-DFA</button>');
         }
     });
 

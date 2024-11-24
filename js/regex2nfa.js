@@ -36,9 +36,9 @@ $(document).ready(function () {
     $('#button_convert').click(function () {
         var url,
             start = regexToNfa($('#input_regex').val()),
-            prefix = window.location.href.split('?')[0] + '?regex=',
+            prefix = window.location.pathname.replace(/\/[^\/]*$/, '/') + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
-        $('#input_url').val(prefix + input);
+        $('#input_url').val(window.location.origin + prefix + input);
         $('#alert_error').hide();
         if (typeof start === 'string') {
             $('#p_error').text(start);
@@ -46,7 +46,7 @@ $(document).ready(function () {
         } else {
             $('svg').attr("width", $('svg').parent().width());
             genAutomataSVG('svg', start);
-            url = prefix.replace('index', 'nfa2dfa') + input;
+            url = window.location.origin + prefix.replace(/\?regex=$/, 'nfa2dfa.html?regex=') + input;
             $('#dfa_link').html('DFA: <a href="' + url + '" target="_blank" >' + url + '</a>');
         }
     });
