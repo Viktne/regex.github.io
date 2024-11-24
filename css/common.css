@@ -1,0 +1,463 @@
+/* 全局样式 */
+:root {
+  --primary-color: #7E57C2;
+  --secondary-color: #5E35B1;
+  --accent-color: #FF4081;
+  --text-color: #2C3E50;
+  --text-light: #7F8C8D;
+  --background-color: #f5f5f5;
+  --card-background: rgba(255, 255, 255, 0.9);
+  --transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+/* 修改背景样式 */
+body {
+  background-image: url('../images/BG.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 为高分辨率屏幕提供2x图片 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    background-image: url('../images/BG@2x.jpg');
+  }
+}
+
+/* 添加遮罩层使背景不那么显眼 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  backdrop-filter: blur(0px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+/* 导航栏现代化样式 */
+.custom-navbar {
+  background: linear-gradient(135deg, rgba(45, 52, 54, 0.95), rgba(87, 96, 111, 0.95));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 1rem 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 增加品牌链接的可点击区域和内边距 */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  transition: transform 0.3s ease, background 0.3s ease;
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -1rem;  /* 抵消内边距，保持原有布局 */
+  border-radius: 8px;     /* 添加圆角 */
+}
+
+/* 修改悬停效果的触发范围 */
+.navbar-brand:hover {
+  transform: translateY(5px);
+  background: linear-gradient(135deg, #FF4081, #7E57C2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 修改齿轮图标样式 */
+.brand-icon {
+  font-size: 1.8rem;
+  display: inline-block;
+  background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* 移除默认transition，防止与animation冲突 */
+  will-change: transform;  /* 优化动画性能 */
+  transform-origin: center center;  /* 确保从中心旋转 */
+}
+
+/* 优化齿轮旋转动画 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 当导航栏品牌悬停时触发齿轮旋转 */
+.navbar-brand:hover .brand-icon {
+  animation: spin 2s linear infinite;
+  background: linear-gradient(135deg, #FF4081, #7E57C2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-text {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: transform 0.3s ease;
+  padding: 0.25rem 0;  /* 增加文字的可点击区域 */
+}
+
+.navbar-brand:hover .brand-text {
+  transform: translateX(5px);
+}
+
+/* 滚动时的样式变化 */
+.custom-navbar.scrolled {
+  background: linear-gradient(135deg, rgba(45, 52, 54, 0.98), rgba(87, 96, 111, 0.98));
+  padding: 0.8rem 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 毛玻璃效果增强 */
+@supports (backdrop-filter: blur(10px)) {
+  .custom-navbar {
+    background: linear-gradient(135deg, rgba(45, 52, 54, 0.85), rgba(87, 96, 111, 0.85));
+    backdrop-filter: blur(10px) saturate(180%);
+  }
+  
+  .custom-navbar.scrolled {
+    background: linear-gradient(135deg, rgba(45, 52, 54, 0.9), rgba(87, 96, 111, 0.9));
+    backdrop-filter: blur(15px) saturate(200%);
+  }
+}
+
+/* 添加微妙的动画效果 */
+@keyframes navbarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-navbar {
+  animation: navbarFadeIn 0.5s ease-out;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .navbar-header {
+    padding: 0 1.2rem;
+  }
+  
+  .brand-text {
+    font-size: 1.3rem;
+  }
+  
+  .brand-icon {
+    font-size: 1.6rem;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .custom-navbar {
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(50, 50, 50, 0.95));
+  }
+  
+  .navbar-brand {
+    background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
+    -webkit-background-clip: text;
+  }
+  
+  .navbar-brand:hover {
+    background: linear-gradient(135deg, #FF4081, #9575CD);
+    -webkit-background-clip: text;
+  }
+  
+  .custom-navbar.scrolled {
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.98), rgba(50, 50, 50, 0.98));
+  }
+}
+/* 容器样式 */
+.container-body {
+  margin-top: 100px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 30px;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* 输入框样式 */
+.form-control {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #000000;
+}
+
+.form-control::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.form-control:focus,
+.form-control:active {
+  background-color: #ffffff !important;
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* 按钮基础样式 */
+.btn {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* 主按钮样式 */
+.btn-primary {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+}
+
+/* 悬停效果 */
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 点击效果 */
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 禁用状态 */
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 表格样式 */
+.table {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th, .table td {
+  padding: 1rem;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+}
+
+.table tr:hover td {
+  background: rgba(33, 150, 243, 0.05);
+}
+
+.table th {
+  background: var(--primary-color);
+  color: white;
+  font-weight: 500;
+  border: none;
+}
+
+/* SVG容器样式 */
+#svg {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: 2rem 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .container-body {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
+}
+
+/* Show/Hide Help 按钮样式 */
+.btn-toggle-help {
+  margin-bottom: 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-toggle-help:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Well容器透明度调整 */
+.well {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.well:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* 添加加载动画样式 */
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--primary-color);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 12px;
+  }
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 标签样式 */
+.control-label {
+  color: rgba(0, 0, 0, 0.8) !important;  /* 加深文字颜色 */
+  font-weight: 500;                       /* 加粗字体 */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);  /* 添加文字阴影 */
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.6);  /* 添加半透明背景 */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.col-md-1.control-label {
+  color: rgba(0, 0, 0, 0.8) !important;
+  white-space: nowrap;
+  margin-right: 15px;
+  min-width: 100px;  /* 确保标签有足够宽度 */
+}
+
+.form-control:focus {
+  border-bottom-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+  transform: translateY(-2px);
+}
