@@ -46,7 +46,7 @@ $(document).ready(function () {
         } else {
             $('svg').attr("width", $('svg').parent().width());
             genAutomataSVG('svg', start);
-            url = prefix.replace('regex2nfa', 'nfa2dfa') + input;
+            url = prefix.replace('index', 'nfa2dfa') + input;
             $('#dfa_link').html('DFA: <a href="' + url + '" target="_blank" >' + url + '</a>');
         }
     });
