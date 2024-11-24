@@ -110,7 +110,9 @@ $(document).ready(function () {
         var nfa = regexToNfa($('#input_regex').val()),
             dfa,
             url,
-            prefix = window.location.pathname.replace(/\/[^\/]*$/, '/') + '?regex=',
+            // 修改为空路径，因为是用户页面
+            basePath = '/',
+            prefix = basePath + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
         $('#input_url').val(window.location.origin + prefix + input);
         $('#alert_error').hide();
@@ -122,7 +124,7 @@ $(document).ready(function () {
             $('#dfa_table').html(genDfaTable(dfa));
             $('svg').attr('width', $('svg').parent().width());
             genAutomataSVG('svg', dfa);
-            url = window.location.origin + prefix.replace(/\?regex=$/, 'nfa2dfa.html?regex=') + input;
+            url = window.location.origin + basePath + 'nfa2dfa.html?regex=' + input;
             $('#dfa_link').html('<button class="btn btn-raised btn-block btn-primary" onclick="window.open(\'' + url + '\', \'_blank\')">DFA</button>');
         }
     });
