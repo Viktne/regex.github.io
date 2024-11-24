@@ -106,11 +106,11 @@ $(document).ready(function () {
         var nfa = regexToNfa($('#input_regex').val()),
             dfa,
             url,
-            // 使用仓库名作为基础路径
-            basePath = '/regex.github.io/',
+            // 动态获取基础路径
+            basePath = window.location.pathname.replace(/\/[^\/]*$/, '/'),
             prefix = basePath + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
-        $('#input_url').val(window.location.origin + prefix + input);
+        $('#input_url').val(window.location.origin + window.location.pathname + '?regex=' + input);
         $('#alert_error').hide();
         if (typeof nfa === 'string') {
             $('#p_error').text(nfa);

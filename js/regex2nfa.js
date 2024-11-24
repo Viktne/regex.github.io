@@ -36,10 +36,10 @@ $(document).ready(function () {
     $('#button_convert').click(function () {
         var url,
             start = regexToNfa($('#input_regex').val()),
-            basePath = '/regex.github.io/',
+            basePath = window.location.pathname.replace(/\/[^\/]*$/, '/'),
             prefix = basePath + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
-        $('#input_url').val(window.location.origin + prefix + input);
+        $('#input_url').val(window.location.origin + window.location.pathname + '?regex=' + input);
         $('#alert_error').hide();
         if (typeof start === 'string') {
             $('#p_error').text(start);
