@@ -36,7 +36,7 @@ $(document).ready(function () {
     $('#button_convert').click(function () {
         var url,
             start = regexToNfa($('#input_regex').val()),
-            basePath = '/',
+            basePath = '/regex.github.io/',
             prefix = basePath + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
         $('#input_url').val(window.location.origin + prefix + input);

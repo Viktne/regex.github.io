@@ -110,8 +110,8 @@ $(document).ready(function () {
         var nfa = regexToNfa($('#input_regex').val()),
             dfa,
             url,
-            // 修改为空路径，因为是用户页面
-            basePath = '/',
+            // 使用仓库名作为基础路径
+            basePath = '/regex.github.io/',
             prefix = basePath + '?regex=',
             input = b64EncodeUnicode($('#input_regex').val());
         $('#input_url').val(window.location.origin + prefix + input);
